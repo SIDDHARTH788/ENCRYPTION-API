@@ -8,7 +8,7 @@ app.use(express.json());
 const algorithm = 'aes-256-cbc';
 const secretKey = Buffer.from(process.env.SECRET_KEY, 'base64');
 
-// 🔐 Encrypt Function
+// Encrypt Function
 function encrypt(text) {
   const iv = crypto.randomBytes(16); // Unique IV for each encryption
   const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
@@ -20,7 +20,7 @@ function encrypt(text) {
   };
 }
 
-// 🔓 Decrypt Function
+// Decrypt Function
 function decrypt(encryptedData, ivHex) {
   const iv = Buffer.from(ivHex, 'hex');
   const decipher = crypto.createDecipheriv(algorithm, secretKey, iv);
@@ -29,7 +29,7 @@ function decrypt(encryptedData, ivHex) {
   return decrypted;
 }
 
-// 🔸 Encrypt Route
+// Encrypt Route
 app.post('/encrypt', (req, res) => {
   const { text } = req.body;
   if (!text) return res.status(400).json({ error: 'Text is required' });
@@ -42,7 +42,7 @@ app.post('/encrypt', (req, res) => {
   }
 });
 
-// 🔹 Decrypt Route
+// Decrypt Route
 app.post('/decrypt', (req, res) => {
   const { encryptedData, iv } = req.body;
   if (!encryptedData || !iv)
@@ -56,7 +56,7 @@ app.post('/decrypt', (req, res) => {
   }
 });
 
-// 🚀 Start Server
+// Start Server
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Encryption API running on http://localhost:${PORT}`);
